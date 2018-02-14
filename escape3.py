@@ -21,16 +21,23 @@ def BFS(n,k,f):
         q.put((vertex, vertex))
         seen = set()
         while q.qsize() > 0:
+            # print "for vertex ", vertex, " the queue is currently: "
+            # for item in list(q.queue):
+            #     print item
             e = q.get()
-            seen.add(e)
-            neighbors = E.get(e,[])
-            for neighbor in neighbors:
-                x = seen_pairs.get(neighbor,0)
-                if x != 0:
-                    seen.add(neighbor)
-                    seen = seen.union(x,seen)
-                elif not neighbor in seen:
-                    q.put(neighbor)
+            if not e in seen:
+                seen.add(e)
+                neighbors = E.get(e,[])
+                for neighbor in neighbors:
+                    x = seen_pairs.get(neighbor,0)
+                    if x != 0:
+                        seen.add(neighbor)
+                        seen = seen.union(x,seen)
+                    elif not neighbor in seen:
+                        q.put(neighbor)
+                    # print "for vertex ", vertex, "and neighbor ", neighbor, " the queue is currently: "
+                    # for item in list(q.queue):
+                    #     print item
         seen_pairs[(vertex,vertex)] = seen
         if len(seen) == target:
             print "YES"
